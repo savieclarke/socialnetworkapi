@@ -1,7 +1,8 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, mongoose } = require('mongoose');
 const mschema = mongoose.Schema;
 
-// Schema to create User model
+
+
 const userSchema = new Schema({
   id: Number,
   username: {
@@ -15,12 +16,14 @@ const userSchema = new Schema({
     required: true,
     unique: true,
   },
-    thoughts: {
-      "thoughts id": thought_id,
-    },
-    friends: {
-      "friends id": user_id,
-    }
+    thoughts: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Thought'
+    }],
+    friends: [{
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }],
   },
       
     

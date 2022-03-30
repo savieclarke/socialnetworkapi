@@ -3,9 +3,16 @@ const { Thought, User } = require('../models');
 module.exports = {
   getThoughts(req, res) {
     Thought.find()
-      .then((Thought) => res.json(thought))
-      .catch((err) => res.status(500).json(err));
+    .then(async (thought) => {
+      return res.json(thought);
+    })
+    .catch((err) => {
+      console.log(err);
+      return res.status(500).json(err);
+    });
   },
+
+
   getSingleThought(req, res) {
     Thought.findOne({ _id: req.params.videoId })
       .then((thought) =>

@@ -1,7 +1,7 @@
 const { ObjectId } = require('bson');
 const { Schema, model } = require('mongoose');
 
-// Schema to create Post model
+
 const reactionSchema = new Schema(
   {
    reactionId: {
@@ -21,8 +21,15 @@ const reactionSchema = new Schema(
       type: Date,
       default: Date.now,
     }
+    },
+    {
+      toJSON: {
+        getters: true
+      },
+      id: false
+    }
     
   
-});
+);
 
-module.exports = Reaction;
+module.exports = reactionSchema;
