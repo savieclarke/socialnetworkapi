@@ -25,7 +25,7 @@ module.exports = {
    // Update a user
    updateUser(req, res) {
     Course.findOneAndUpdate(
-      { _id: req.params.courseId },
+      { _id: req.params.userId },
       { $set: req.body },
       { runValidators: true, new: true }
     )
@@ -36,9 +36,9 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  // Delete a course
+  
   deleteUser(req, res) {
-    Course.findOneAndDelete({ _id: req.params.courseId })
+    Course.findOneAndDelete({ _id: req.params.userId })
       .then((course) =>
         !course
           ? res.status(404).json({ message: 'No user with that ID' })
@@ -47,5 +47,38 @@ module.exports = {
       .then(() => res.json({ message: 'User deleted!' }))
       .catch((err) => res.status(500).json(err));
   },
-};
+
+
+addFriend(req, res) {
+  Course.findOneAndUpdate(
+    { _id: req.params.userId },
+    { $addToSet: {friends:req.body }},
+    { runValidators: true, new: true }
+  )
+    .then((course) =>
+      !course
+        ? res.status(404).json({ message: 'No user with this id!' })
+        : res.json(User)
+    )
+    .catch((err) => res.status(500).json(err));
+},
+
+removeFriend(req, res) {
+  Course.findOneAndUpdate(
+    { _id: req.params.userId },
+    { $pull:{ friends:{friendsId: req.params.friendId}}},
+
+    { runValidators: true, new: true }
+  )
+    .then((course) =>
+      !course
+        ? res.status(404).json({ message: 'No user with this id!' })
+        : res.json(User)
+    )
+    .catch((err) => res.status(500).json(err));
+  
+
+  
+  
+}};
 
